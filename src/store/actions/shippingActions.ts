@@ -73,4 +73,5 @@ export const captureCheckout = (checkoutTokenId: string, newOder: any) => async(
 
 export const resetOrder = () => (dispatch: Dispatch) => {
     dispatch({ type: 'SET_ORDER', data: emptyOrder});
+    dispatch({ type: 'SET_ERROR', data: ''});
 }
