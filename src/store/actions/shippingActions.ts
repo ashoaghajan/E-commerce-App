@@ -41,12 +41,12 @@ export  const setSubdivision = (subdivisionId: string) => (dispatch: Dispatch) =
 export const getShippingOptions = (checkoutTokenId: string, country: string, region: string = '') => async(dispatch: Dispatch) => {
     try{
         const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
-        const optionsList = options.length ? options.map((option: ShippingOptionItem) => (
+        const optionsList = options.map((option: ShippingOptionItem) => (
             { id: option.id, label: `${option.description} - (${option.price.formatted_with_symbol})` }
-        )) : [];
+        ));
 
         optionsList.length && dispatch({ type: 'SET_OPTIONS', data: optionsList});
-        options.length && dispatch({ type: 'SET_OPTION', data: options[0].id});
+        options.length && dispatch({ type: 'SET_OPTION', data: options[0].id ? options[0].id : 'ship_0YnEoqWj6le7P6' });
     }
     catch(err){
         console.log(err.message);

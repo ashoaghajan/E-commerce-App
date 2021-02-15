@@ -14,7 +14,6 @@ const Cart: React.SFC<CartProps> = () => {
     const classes = useStyles();
     const cart = useSelector((state: RootState) => state.shop.cart);
 
-
     const Component = cart.line_items.length ? <FilledCart classes={classes} cart={cart}/> : <EmptyCart classes={classes} />;
 
     return ( 

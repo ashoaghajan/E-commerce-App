@@ -17,7 +17,7 @@ const CurrencyBar: React.SFC<CurrencyBarProps> = ({ label, value, options, onCha
     return ( 
         <Grid item xs={12} sm={6}>
         <InputLabel>{label}</InputLabel>
-        <Select value={value}  onChange={handleSelect}>
+        <Select value={value}  onChange={handleSelect} required>
             {options.map(option => (
                 <MenuItem value={option.id} key={option.id}>{option.label}</MenuItem>
             ))}

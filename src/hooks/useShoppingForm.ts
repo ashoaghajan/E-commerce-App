@@ -11,16 +11,21 @@ import {
     setShippingOption,
     setShippingData
 } from '../store/actions/shippingActions';
-import { changeStep, resetToken } from '../store/actions/shopActions';
+import { changeStep, resetToken, getTocken } from '../store/actions/shopActions';
 
 export const useShoppingForm = () => {
         
     const methods = useForm();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { checkoutToken } = useSelector((state: RootState) => state.shop);
+    const { checkoutToken, cart } = useSelector((state: RootState) => state.shop);
     const  {  countries, country, subdivisions, subdivision, options, option } = useSelector((state: RootState) => state.shipping);
 
+    useEffect(() => {
+        if(!checkoutToken.id){
+            dispatch(getTocken(cart.id))
+        }
+    })
 
     useEffect(() => {
         if(checkoutToken.id){
