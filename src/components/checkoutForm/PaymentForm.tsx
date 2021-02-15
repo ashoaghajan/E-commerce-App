@@ -20,7 +20,7 @@ const PaymentForm: React.SFC<PaymentFormProps> = () => {
         <>
             <Review />
             <Divider />
-            <Typography variant='h6' gutterBottom style={{ margin: '20px 0' }}>Payment Method</Typography>
+            <Typography variant='h6' gutterBottom style={{ margin: '20px 0' }}>Payment Method (use 424242... for testing)</Typography>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>
                     {({ elements, stripe }) => ( 
