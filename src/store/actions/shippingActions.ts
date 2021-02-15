@@ -1,5 +1,6 @@
 import { commerce } from '../../lib/commerce';
 import { emptyOrder } from '../../global/globalVariables';
+import { refreshCart, resetToken } from './shopActions';
 
 export  const getCountries = (checkoutTokenId: string) => async(dispatch: Dispatch) => {
     try{
@@ -40,12 +41,12 @@ export  const setSubdivision = (subdivisionId: string) => (dispatch: Dispatch) =
 export const getShippingOptions = (checkoutTokenId: string, country: string, region: string = '') => async(dispatch: Dispatch) => {
     try{
         const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
-        const optionsList = options.map((option: ShippingOptionItem) => (
+        const optionsList = options.length ? options.map((option: ShippingOptionItem) => (
             { id: option.id, label: `${option.description} - (${option.price.formatted_with_symbol})` }
-        ))
+        )) : [];
 
-        dispatch({ type: 'SET_OPTIONS', data: optionsList});
-        dispatch({ type: 'SET_OPTION', data: options[0].id});
+        optionsList.length && dispatch({ type: 'SET_OPTIONS', data: optionsList});
+        options.length && dispatch({ type: 'SET_OPTION', data: options[0].id});
     }
     catch(err){
         console.log(err.message);
@@ -60,9 +61,11 @@ export  const setShippingData = (data: any) => (dispatch: Dispatch) => {
     dispatch({ type: 'SET_SHIPPING_DATA', data: data});
 }
 
-export const captureCheckout = (checkoutTokenId: string, newOder: any) => async(dispatch: Dispatch) => {
+export const captureCheckout = (checkoutTokenId: string, newOder: any, makeDispatch: Function) => async(dispatch: Dispatch) => {
     try{
         const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOder);
+        makeDispatch(refreshCart());
+        makeDispatch(resetToken());
         dispatch({ type: 'SET_ORDER', data: incomingOrder});
     }
     catch(err){

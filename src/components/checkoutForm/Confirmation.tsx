@@ -42,7 +42,7 @@ const Confirmation: React.SFC<ConfirmationProps> = ({ classes }) => {
     if(error){
       Confirmation = (
         <>
-            <Typography variant='h5'>Error: {error}</Typography>
+            <Typography variant='h5'>Oops: {error}</Typography>
             <br/>
             <Button onClick={backToHome} variant='outlined' type='button'>Back To Home</Button>
         </>

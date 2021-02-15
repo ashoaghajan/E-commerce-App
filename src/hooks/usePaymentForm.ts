@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changeStep, refreshCart, resetToken } from '../store/actions/shopActions';
+import { changeStep } from '../store/actions/shopActions';
 import { captureCheckout } from '../store/actions/shippingActions';
 import { CardElement } from '@stripe/react-stripe-js';
 import { Stripe, StripeElements } from '@stripe/stripe-js'
@@ -51,10 +51,8 @@ export const usePaymentForm = () => {
                         }
                     }
                 }
-                dispatch(captureCheckout(checkoutToken.id, orderData));
-                dispatch(refreshCart());
+                dispatch(captureCheckout(checkoutToken.id, orderData, dispatch));
                 dispatch(changeStep(2));
-                dispatch(resetToken());
             }
         }
     }
